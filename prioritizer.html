@@ -1,0 +1,53 @@
+<head>
+  <title>Items to be ranked</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        Raw list
+      </div>
+      <div class="panel-body">
+        {{> leaderboard}}
+      </div>
+    </div>
+    <h2>Vote on one to prioritize</h2> {{> votingPairs}}
+
+  </div>
+</body>
+
+<template name="addItemForm">
+  <form>
+    <input type="text" class="form-control" name="itemName">
+    <!-- <input type="submit" class="btn btn-primary" value="Add an item"> -->
+  </form>
+</template>
+
+<template name="leaderboard">
+  {{> addItemForm}}
+  <ul>
+    {{#each item}}
+    <li class="item {{selectedClass}}"> {{name}}: {{score}} </li>
+    {{/each}}
+  </ul>
+  {{#if showSelectedItem}}
+  <li>Selected item: {{showSelectedItem.name}}</li>
+  <input type="button" class="remove" value="Remove item"> {{/if}}
+</template>
+
+<template name="votingPairs">
+  <ul>
+    <li> Total number of pairs to review: {{totalPairs}} </li>
+    <li> Here is the list: {{pairItems}} </li>
+  </ul>
+
+<div class="col-sm-12">
+  <div class="btn-group btn-block" role="group" aria-label="...">
+    {{#with pairItems}}
+  <button type="button" class="btn btn-default btn-vote" value="{{initialItem._id}}" data-comparedWith="{{comparedWithItem._id}}">{{initialItem.name}}</button>
+  <button type="button" class="btn btn-default btn-vote" value="{{comparedWithItem._id}}" data-comparedWith="{{initialItem._id}}">{{comparedWithItem.name}}</button>
+  {{/with}}
+</div>
+</div>
+</template>
